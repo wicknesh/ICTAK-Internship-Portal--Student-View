@@ -1,17 +1,15 @@
-import React from 'react';
-import CustomNavbar from './CustomNavbar';
+// import React from 'react';
+// import CustomNavbar from './CustomNavbar';
 
-const Layout = ({ child }) => {
-  return (
-    <div>
+// const Layout = ({ child }) => {
+//   return (
+//     <div>
     
-      <CustomNavbar />
+//       <CustomNavbar />
+//         {child}
       
-     
-        {child}
-      
-    </div>
-  );
-};
+//     </div>
+//   );
+// };
 
-export default Layout;
+// export default Layout;
