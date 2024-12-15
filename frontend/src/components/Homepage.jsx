@@ -1,13 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faClock, faBuilding, faSmile, faMoneyBill } from "@fortawesome/free-solid-svg-icons";
-import './HomePage.css';
+import './Homepage.css';
 import PopularCategories from './PopularCategories';
 import CustomNavbar from './CustomNavbar';
-
-
-
-
 
 const HomePage = () => {
   return (
