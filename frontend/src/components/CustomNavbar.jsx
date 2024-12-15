@@ -1,5 +1,5 @@
-import React from 'react';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const CustomNavbar = () => {
   return (
@@ -77,28 +77,30 @@ const CustomNavbar = () => {
 
           
           <div className="d-flex gap-2">
-            <Button
-              variant="outline-success"
-              href="#login"
-              className="btn-sm"
-              style={{
-                fontSize: '0.75rem', 
-                padding: '0.25rem 0.5rem', 
-              }}
-            >
-              Login
-            </Button>
-            <Button
-              variant="success"
-              href="#signup"
-              className="btn-sm"
-              style={{
-                fontSize: '0.75rem', 
-                padding: '0.25rem 0.5rem',
-              }}
-            >
-              Signup
-            </Button>
+            <Link to={'/login'}>
+              <Button
+                variant="outline-success"
+                className="btn-sm"
+                style={{
+                  fontSize: '0.75rem',
+                  padding: '0.25rem 0.5rem',
+                }}
+              >
+                Login
+              </Button>
+            </Link>
+            <Link to={'/signup'}>
+              <Button
+                variant="success"
+                className="btn-sm"
+                style={{
+                  fontSize: '0.75rem',
+                  padding: '0.25rem 0.5rem',
+                }}
+              >
+                Signup
+              </Button>
+            </Link>
           </div>
         </Navbar.Collapse>
       </Container>
