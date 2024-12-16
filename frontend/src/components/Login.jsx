@@ -18,8 +18,8 @@ const LoginPage = () => {
     }
 
     try {
-      // const response = await axios.post('http://localhost:4000/student/login', {
-      const response = await axios.post('https://ictak-internship-portal-student-view-api.vercel.app/student/login', {
+      const response = await axios.post('http://localhost:4000/student/login', {
+      // const response = await axios.post('https://ictak-internship-portal-student-view-api.vercel.app/student/login', {
         email,
         password,
       });
