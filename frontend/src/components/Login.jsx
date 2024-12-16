@@ -9,6 +9,8 @@ const LoginPage = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
+  axios.defaults.withCredentials = true;
+
   const handleLogin = async () => {
     if (!email || !password) {
       setErrorMessage('Please fill in both fields.');
@@ -16,7 +18,8 @@ const LoginPage = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:4000/student/login', {
+      // const response = await axios.post('http://localhost:4000/student/login', {
+      const response = await axios.post('https://ictak-internship-portal-student-view-api.vercel.app/student/login', {
         email,
         password,
       });
