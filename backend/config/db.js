@@ -6,7 +6,7 @@ const options = {
 
 const connectDB = () => {
     mongoose.connect(process.env.mongodb_url, options)
-        .then(() => console.log('DB is connected'))
+        .then(() => console.log(`Vignesh's DB is connected`))
         .catch((error) => console.log(error));
 }
 
