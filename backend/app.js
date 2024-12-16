@@ -1,12 +1,12 @@
-const express=require("express")
-const cors=require('cors')
+import express from 'express';
+import cors from 'cors';
+import 'dotenv/config';
+// import './db/connection.js' //Amina DB connection
+import connectDB from './config/db.js'
+import studentRoutes from './routes/studentRoutes.js';
+import projectRoutes from './routes/projectRoutes.js';
 
-require("dotenv").config()
-
-require("./db/connection")
-const studentRoutes =require("./routes/studentRoutes")
-
-var app=express()
+const app = express();
 app.use(express.json());
 app.use(cors());
 // app.use(cors({
@@ -14,8 +14,15 @@ app.use(cors());
 //     methods: ["POST", "PUT", "GET"],
 //     credentials: true
 // }))
-app.use('/student',studentRoutes)
+app.use('/student', studentRoutes); //common for Amina
+app.use('/project', projectRoutes);
 
-app.listen(process.env.port,()=>{
-    console.log(`listening to port ${process.env.port}`)
+app.get('/', (req, res) => {
+    res.send('Working');
 })
+
+app.listen(process.env.port, () => {
+    console.log(`Server is listening to port ${process.env.port}`);
+})
+
+connectDB();
