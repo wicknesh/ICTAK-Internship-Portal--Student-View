@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { TextField, Button, Typography } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { StudentContext } from './StudentProvider';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
+  const { setStudent } = useContext(StudentContext);
 
   // axios.defaults.withCredentials = true;
 
@@ -18,7 +20,7 @@ const LoginPage = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:4000/student/login', {
+      const response = await axios.post('http://localhost:3000/student/login', {
       // const response = await axios.post('https://ictak-internship-portal-student-view-api.vercel.app/student/login', {
         email,
         password,
@@ -26,7 +28,8 @@ const LoginPage = () => {
 
       if (response.status === 200) {
         alert(response.data.message);
-        navigate('/dashboard'); // Redirect to the dashboard page
+        setStudent(response.data.user);
+        navigate('/student-dashboard'); // Redirect to the dashboard page
       }
     } catch (error) {
       setErrorMessage(
