@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Accordion, AccordionDetails, AccordionSummary, Container, Typography, Link as MuiLink, Box, Button, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Link } from 'react-router-dom';
