@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { TextField, Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,8 @@ const Signup = () => {
 
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  axios.defaults.withCredentials = true;
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -33,30 +36,54 @@ const Signup = () => {
       return;
     }
 
+    // try {
+    //   const response = await fetch('http://localhost:4000/student/register', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ name, email, password, phone }),
+    //   });
+
+    //   if (!response.ok) {
+    //     const errorData = await response.json();
+    //     throw new Error(errorData.message || 'Registration failed');
+    //   }
+
+    //   const result = await response.json();
+    //   setSuccess(result.message);
+    //   setError('');
+    //   console.log('Registration successful:', result.message);
+
+    //   // Redirect to login after a delay
+    //   setTimeout(() => {
+    //     window.location.href = '/login';
+    //   }, 2000);
+    // } catch (error) {
+    //   console.error('Error:', error.message);
+    //   setError(error.message);
+    //   setSuccess('');
+    // }
+    
     try {
-      const response = await fetch('http://localhost:4000/student/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password, phone }),
+      const response = await axios.post('https://ictak-internship-portal-student-view-api.vercel.app//student/register', {
+        name,
+        email,
+        password,
+        phone,
       });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Registration failed');
-      }
-
-      const result = await response.json();
-      setSuccess(result.message);
+    
+      // Handle success response
+      setSuccess(response.data.message);
       setError('');
-      console.log('Registration successful:', result.message);
-
+      console.log('Registration successful:', response.data.message);
+    
       // Redirect to login after a delay
       setTimeout(() => {
         window.location.href = '/login';
       }, 2000);
     } catch (error) {
-      console.error('Error:', error.message);
-      setError(error.message);
+      // Handle error response
+      console.error('Error:', error.response?.data?.message || 'Registration failed');
+      setError(error.response?.data?.message || 'Registration failed');
       setSuccess('');
     }
   };
