@@ -4,6 +4,7 @@ import { faStar, faClock, faBuilding, faSmile, faMoneyBill } from "@fortawesome/
 import './Homepage.css';
 import PopularCategories from './PopularCategories';
 import CustomNavbar from './CustomNavbar';
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   return (
@@ -29,7 +30,7 @@ const HomePage = () => {
               <p className="signup-text">
                 Ready to kickstart your career? <br /> Sign up now to get access to the latest opportunities!
               </p>
-              <button className="btn btn-success signup-btn">Sign Up</button>
+              <Link to={'/signup'}><button className="btn btn-success signup-btn">Sign Up</button></Link>
       
           </div>
           <div  className="popular-categories-container">
