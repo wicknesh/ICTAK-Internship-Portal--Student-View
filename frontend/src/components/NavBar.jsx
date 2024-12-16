@@ -3,6 +3,7 @@ import AppBar from '@mui/material/AppBar';
 import { Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { StudentContext } from './StudentProvider';
+import { useNavigate } from 'react-router-dom';
 // import axios from 'axios';
 
 const pages = ['Home', 'Projects'];
@@ -10,9 +11,8 @@ const pages = ['Home', 'Projects'];
 const NavBar = () => {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
-    // const [ student, setStudent ] = useState(null);
-    // const studentID = 6;
-    const { student } = useContext (StudentContext);
+    const { student, setStudent } = useContext (StudentContext);
+    const navigate = useNavigate();
   
     const handleOpenNavMenu = (event) => {
       setAnchorElNav(event.currentTarget);
@@ -28,6 +28,14 @@ const NavBar = () => {
     const handleCloseUserMenu = () => {
       setAnchorElUser(null);
     };
+
+    const handleLogout = () => {
+      setStudent(null);
+      localStorage.removeItem("student");
+      navigate('/');
+    }
+
+
 
     // useEffect(() => {
     //   async function fetchStudent () {
@@ -169,7 +177,6 @@ const NavBar = () => {
               </MenuItem>
             ))} */}
             <MenuItem
-              onClick={handleCloseUserMenu}
               sx={{
                 '&:hover': {
                   backgroundColor: '#353535'
@@ -179,7 +186,7 @@ const NavBar = () => {
               <Typography sx={{ textAlign: 'center', color: '#ececec' }}>{student?.name}</Typography>
             </MenuItem>
             <MenuItem
-              onClick={handleCloseUserMenu}
+              onClick={ handleLogout }
               sx={{
                 '&:hover': {
                   backgroundColor: '#353535'
