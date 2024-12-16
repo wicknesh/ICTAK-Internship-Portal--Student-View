@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const ProjectBoard = () => {
-  const pid = 202;
+  const pid = 201;
   const [marksData, setMarksData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -124,37 +124,47 @@ const ProjectBoard = () => {
       <Container maxWidth="lg" style={{ marginTop: '20px', backgroundColor: 'white' }}>
         {/* Accordion: Project Overview */}
         <Accordion
-          sx={{ marginBottom: '10px' }}
-          onChange={(e, isExpanded) => isExpanded && fetchProjectDocument()}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="project-overview-content"
-            id="project-overview-header"
-          >
-            <Typography variant="h6">Project Overview document</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            {isDocumentLoading ? (
-              <Typography>Loading project data...</Typography>
-            ) : documentError ? (
-              <Typography color="error">{documentError}</Typography>
-            ) : projectData ? (
-              <div>
-                {projectData.find((project) => project.ProjectId === pid) ? (
-                  <Typography variant="body1">
-                    <strong>Project Document:</strong>{' '}
-                    {projectData.find((project) => project.ProjectId === pid).ProjectDocument}
-                  </Typography>
-                ) : (
-                  <Typography>No project data available for ProjectId {pid}</Typography>
-                )}
-              </div>
+  sx={{ marginBottom: '10px' }}
+  onChange={(e, isExpanded) => isExpanded && fetchProjectDocument()}
+>
+  <AccordionSummary
+    expandIcon={<ExpandMoreIcon />}
+    aria-controls="project-overview-content"
+    id="project-overview-header"
+  >
+    <Typography variant="h6">Project Overview document</Typography>
+  </AccordionSummary>
+  <AccordionDetails>
+    {isDocumentLoading ? (
+      <Typography>Loading project data...</Typography>
+    ) : documentError ? (
+      <Typography color="error">{documentError}</Typography>
+    ) : projectData ? (
+      <div>
+        {projectData.find((project) => project.ProjectId === pid) ? (
+          <Typography variant="body1">
+            Click here to:{' '}
+            {projectData.find((project) => project.ProjectId === pid).ProjectDocument ? (
+              <a
+                href={projectData.find((project) => project.ProjectId === pid).ProjectDocument}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Document
+              </a>
             ) : (
-              <Typography>No project data available</Typography>
+              <Typography>No document link available</Typography>
             )}
-          </AccordionDetails>
-        </Accordion>
+          </Typography>
+        ) : (
+          <Typography>No project data available for ProjectId {pid}</Typography>
+        )}
+      </div>
+    ) : (
+      <Typography>No project data available</Typography>
+    )}
+  </AccordionDetails>
+</Accordion>
 
         {/* Accordion: Reference Materials */}
         <Accordion
