@@ -1,16 +1,18 @@
-import { useEffect, useState } from 'react'
+import {  useContext, useEffect, useState } from 'react'
 import AppBar from '@mui/material/AppBar';
 import { Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import axios from 'axios';
+import { StudentContext } from './StudentProvider';
+// import axios from 'axios';
 
 const pages = ['Home', 'Projects'];
 
 const NavBar = () => {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
-    const [ student, setStudent ] = useState(null);
-    const studentID = 6;
+    // const [ student, setStudent ] = useState(null);
+    // const studentID = 6;
+    const { student } = useContext (StudentContext);
   
     const handleOpenNavMenu = (event) => {
       setAnchorElNav(event.currentTarget);
@@ -27,17 +29,17 @@ const NavBar = () => {
       setAnchorElUser(null);
     };
 
-    useEffect(() => {
-      async function fetchStudent () {
-          const res = await axios.get(`http://localhost:3000/student/${studentID}`);
-          try {
-              setStudent(res.data);
-          } catch (error) {
-              console.log(error);
-          }
-      }
-      fetchStudent();
-    }, []);
+    // useEffect(() => {
+    //   async function fetchStudent () {
+    //       const res = await axios.get(`http://localhost:3000/student/${studentID}`);
+    //       try {
+    //           setStudent(res.data);
+    //       } catch (error) {
+    //           console.log(error);
+    //       }
+    //   }
+    //   fetchStudent();
+    // }, []);
 
   return (
     <AppBar position="static" style={{backgroundColor: '#1e1e1e'}}>
@@ -174,7 +176,7 @@ const NavBar = () => {
                 }
               }}
             >
-              <Typography sx={{ textAlign: 'center' }}>{student?.name}</Typography>
+              <Typography sx={{ textAlign: 'center', color: '#ececec' }}>{student?.name}</Typography>
             </MenuItem>
             <MenuItem
               onClick={handleCloseUserMenu}
@@ -184,7 +186,7 @@ const NavBar = () => {
                 }
               }}
             >
-              <Typography sx={{ textAlign: 'center' }}>Logout</Typography>
+              <Typography sx={{ textAlign: 'center', color: "#ececec" }}>Logout</Typography>
             </MenuItem>
           </Menu>
         </Box>
