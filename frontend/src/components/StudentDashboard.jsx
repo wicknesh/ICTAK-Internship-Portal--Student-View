@@ -4,6 +4,7 @@ import axios from 'axios';
 import { red } from "@mui/material/colors";
 import NavBar from "./NavBar";
 import { StudentContext } from "./StudentProvider";
+import { useNavigate } from "react-router-dom";
 
 const StudentDashboard = () => {
     const [ selectedCard, setSelectedCard ] = useState(null);
@@ -12,6 +13,7 @@ const StudentDashboard = () => {
     const [ confirmModal, setConfirmModal ] = useState(false);
     // const [ student, setStudent ] = useState (null);
     const { student } = useContext (StudentContext);
+    const navigate = useNavigate();
 
       const handleCardClick = (index) => {
         setSelectedCard(prevSelected => prevSelected === index ? null : index);
@@ -45,12 +47,12 @@ const StudentDashboard = () => {
         try {
             const selectedProjectId = projects[selectedCard].p_id;
             const studentId = student?.s_id;
-            const res = await axios.put(`http://localhost:3000/student/selectProject`, {
+            await axios.put(`http://localhost:3000/student/selectProject`, {
                 s_id: studentId,
                 p_id: selectedProjectId
             });
-            console.log(res.data.message);
             setConfirmModal(false);
+            navigate('/project-dashboard')
             } catch (error) {
                 console.error(`Error selecting project: ${error}`);
             }
@@ -62,7 +64,6 @@ const StudentDashboard = () => {
 
   return (
     <>
-        <NavBar />
         <Box sx={{
             backgroundColor: '#121212',
             minHeight: '100vh',
