@@ -22,4 +22,13 @@ router.get('/all', async (req, res) => {
     }
 })
 
+router.get('/:id', async (req, res) => {
+    try {
+        const data = await projectModel.findOne({ p_id: req.params.id })
+        res.status(200).send(data);
+    } catch (error) {
+        res.status(404).send(error);
+    }
+})
+
 export default router;
