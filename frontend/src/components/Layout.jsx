@@ -1,15 +1,15 @@
-// import React from 'react';
-// import CustomNavbar from './CustomNavbar';
+import { Outlet } from 'react-router-dom';
+import NavBar from './NavBar';
 
-// const Layout = ({ child }) => {
-//   return (
-//     <div>
+const Layout = () => {
+  return (
+    <>
     
-//       <CustomNavbar />
-//         {child}
+      <NavBar />
+      <Outlet />
       
-//     </div>
-//   );
-// };
+    </>
+  );
+};
 
-// export default Layout;
+export default Layout;
