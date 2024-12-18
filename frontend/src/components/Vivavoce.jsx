@@ -1,96 +1,41 @@
-import React, { useState } from 'react';
-import { Box, Button, TextField, Typography, Container, Card, CardContent, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import React from 'react';
 
-const Vivavoce = () => {
-  const [projectTitle, setProjectTitle] = useState('');
-  const [projectSummary, setProjectSummary] = useState('');
-  const [challenges, setChallenges] = useState('');
-  const [futureWork, setFutureWork] = useState('');
-  const [questions, setQuestions] = useState('');
-  
-  const handleSubmit = () => {
-    alert('Your Viva Voce submission has been saved!');
-  };
-
+const Vivavoce= () => {
   return (
-    <Container sx={{ padding: '20px' }}>
-      <Typography variant="h4" sx={{ marginBottom: '20px' }}>
-        Viva Voce Format
-      </Typography>
+    <div>
+      <h2>Viva-Voce Guidelines</h2>
+      
+      <p>
+        A Viva-Voce is an oral examination where you present your project to your examiners.
+        Here are the key points to help you prepare:
+      </p>
 
-      {/* Project Details */}
-      <Card sx={{ marginBottom: '20px' }}>
-        <CardContent>
-          <Typography variant="h6">Project/Thesis Details</Typography>
-          <TextField
-            label="Project Title"
-            variant="outlined"
-            fullWidth
-            sx={{ marginBottom: '15px' }}
-            value={projectTitle}
-            onChange={(e) => setProjectTitle(e.target.value)}
-          />
-          <TextField
-            label="Project Summary"
-            variant="outlined"
-            multiline
-            rows={4}
-            fullWidth
-            sx={{ marginBottom: '15px' }}
-            value={projectSummary}
-            onChange={(e) => setProjectSummary(e.target.value)}
-          />
-        </CardContent>
-      </Card>
+      <h3>Preparation Guidelines:</h3>
+      <ul>
+        <li>Explain the objective of your project: What is it designed to do?</li>
+        <li>Describe the key features and modules of the project: Student view, Mentor view, and Admin view.</li>
+        <li>Talk about the technologies used and why you chose them (React, Node.js, MongoDB, etc.).</li>
+        <li>Discuss the challenges you faced during the development and how you solved them.</li>
+        <li>Be ready for a live demo: Show how the system works step by step.</li>
+        <li>Understand the system architecture: Explain the flow of the application and how each module interacts.</li>
+      </ul>
 
-      {/* Viva Questions Accordion */}
-      <Accordion sx={{ marginBottom: '15px' }}>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
-          <Typography variant="h6">Viva Questions</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <TextField
-            label="Challenges Encountered"
-            variant="outlined"
-            multiline
-            rows={3}
-            fullWidth
-            sx={{ marginBottom: '15px' }}
-            value={challenges}
-            onChange={(e) => setChallenges(e.target.value)}
-          />
-          <TextField
-            label="Future Work"
-            variant="outlined"
-            multiline
-            rows={3}
-            fullWidth
-            sx={{ marginBottom: '15px' }}
-            value={futureWork}
-            onChange={(e) => setFutureWork(e.target.value)}
-          />
-          <TextField
-            label="Additional Questions/Clarifications"
-            variant="outlined"
-            multiline
-            rows={3}
-            fullWidth
-            sx={{ marginBottom: '15px' }}
-            value={questions}
-            onChange={(e) => setQuestions(e.target.value)}
-          />
-        </AccordionDetails>
-      </Accordion>
+      <h3>Viva-Voce Questions to Prepare For:</h3>
+      <ul>
+        <li>What is the purpose of your project? Why did you choose it?</li>
+        <li>How does the student registration process work?</li>
+        <li>Explain how the mentor evaluates student submissions and marks them.</li>
+        <li>What technologies did you use in your project? Why did you choose these technologies?</li>
+        <li>Can you explain how the admin manages the project topics and mentors?</li>
+        <li>What were the challenges you faced while building this project, and how did you overcome them?</li>
+        <li>Can you explain the system flow from login to project selection and submission?</li>
+      </ul>
 
-      {/* Submit Button */}
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
-          Submit Viva Voce Details
-        </Button>
-      </Box>
-    </Container>
+      <p>
+        Ensure you are comfortable explaining each part of your project and answering questions from the examiners.
+      </p>
+    </div>
   );
-};
+}
 
 export default Vivavoce;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Accordion, AccordionDetails, AccordionSummary, Container, Typography, Link as MuiLink, Box, Button, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Container, Typography, Link as MuiLink, Box, Button, Table, TableHead, TableRow, TableCell, TableBody, TextField } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -14,10 +14,10 @@ const ProjectBoard = () => {
   const [documentError, setDocumentError] = useState(null);
 
   const topics = [
-    { title: 'Weekly Submission format and submission links', path: '/weekly-submission' },
-    { title: 'Final Project Submission and Format', path: '/final-submission' },
-    { title: 'Viva-voce format', path: '/vivavoce' },
-    { title: 'Discussion Forum', path: '/discussionforum' },
+   // { title: 'Weekly Submission format and submission links', path: '/weekly-submission' },
+    // { title: 'Final Project Submission and Format', path: '/final-submission' },
+    //{ title: 'Viva-voce format', path: '/vivavoce' },
+    //{ title: 'Discussion Forum', path: '/discussionforum' },
   ];
 
   const handleLogout = () => {
@@ -199,28 +199,82 @@ const ProjectBoard = () => {
             )}
           </AccordionDetails>
         </Accordion>
+     {/* Accordion for Weekly Submission format and submission links */}
+     <Accordion sx={{ marginBottom: '10px' }}>
 
-        {/* Accordion: Topics Section */}
-        {topics.map((topic, index) => (
-          <Accordion key={index} sx={{ marginBottom: '10px' }}>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls={`panel${index}-content`}
-              id={`panel${index}-header`}
-            >
-              <Typography variant="h6">{topic.title}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <MuiLink
-                component={Link}
-                to={topic.path}
-                style={{ textDecoration: 'none', color: 'blue' }}
-              >
-                Click here to Access the {topic.title}
-              </MuiLink>
-            </AccordionDetails>
-          </Accordion>
-        ))}
+  <AccordionSummary  expandIcon={<ExpandMoreIcon />}
+  aria-controls="project-overview-content"   id="project-overview-header">
+    <Typography variant="h6">Weekly Submission format and submission links</Typography>
+  </AccordionSummary>
+  <AccordionDetails>
+
+  </AccordionDetails>
+  </Accordion>
+
+
+{/* Acordion for project submission and Format */}
+        <Accordion sx={{ marginBottom: '10px' }}>
+
+  <AccordionSummary  expandIcon={<ExpandMoreIcon />}
+  aria-controls="project-overview-content"   id="project-overview-header">
+    <Typography variant="h6">Final project submission and Format</Typography>
+  </AccordionSummary>
+  <AccordionDetails>
+    
+       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+               <TextField
+                 label="Project Title"
+                 variant="outlined"
+                 sx={{ marginBottom: '15px' }}
+               />
+               <TextField
+                 label="Project Description"
+                 variant="outlined"
+                 multiline
+                 rows={4}
+                 sx={{ marginBottom: '15px' }}
+               />
+               
+               {/* Links Section */}
+               <TextField
+                 label="GitHub Repository Link"
+                 variant="outlined"
+                 type="url"
+                 sx={{ marginBottom: '15px' }}
+               />
+             
+               
+               
+               {/* Submit button */}
+               <Button variant="contained" color="primary" sx={{ marginTop: '15px' }}>
+                 Submit Project
+               </Button>
+             </Box>
+  </AccordionDetails>
+</Accordion>
+{/* Accordion for Project Report & viva-voce format */}
+<Accordion sx={{ marginBottom: '10px' }}>
+
+  <AccordionSummary  expandIcon={<ExpandMoreIcon />}
+  aria-controls="project-overview-content"   id="project-overview-header">
+    <Typography variant="h6">  Project Report & Viva-Voce Format</Typography>
+  </AccordionSummary>
+  <AccordionDetails>
+
+  </AccordionDetails>
+  </Accordion>
+{/* Accordion for discussion Forum*/}
+<Accordion sx={{ marginBottom: '10px' }}>
+
+  <AccordionSummary  expandIcon={<ExpandMoreIcon />}
+  aria-controls="project-overview-content"   id="project-overview-header">
+    <Typography variant="h6">  Discussion Forum</Typography>
+  </AccordionSummary>
+  <AccordionDetails>
+
+  </AccordionDetails>
+  </Accordion>
+
 
         {/* Accordion: Marks and Comments */}
         <Accordion
@@ -243,9 +297,9 @@ const ProjectBoard = () => {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell align="center">Assignment</TableCell>
-                    <TableCell align="center">Project ID</TableCell>
-                    <TableCell align="center">Student ID</TableCell>
+                    <TableCell align="center"> Submission Week </TableCell>
+                    <TableCell align="center">Date of Valuation</TableCell>
+                   
                     <TableCell align="center">Marks</TableCell>
                     <TableCell align="center">Comments</TableCell>
                   </TableRow>
@@ -253,9 +307,9 @@ const ProjectBoard = () => {
                 <TableBody>
                   {marksData.map((mark, index) => (
                     <TableRow key={index}>
-                      <TableCell align="center">{mark.assignment}</TableCell>
-                      <TableCell align="center">{mark.projectId}</TableCell>
-                      <TableCell align="center">{mark.studentId}</TableCell>
+                      <TableCell align="center">{mark.week}</TableCell>
+                      <TableCell align="center">{mark.date}</TableCell>
+                      
                       <TableCell align="center">{mark.marks}</TableCell>
                       <TableCell align="center">{mark.comment}</TableCell>
                     </TableRow>

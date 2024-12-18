@@ -1,7 +1,9 @@
 const mongoose=require('mongoose');
 const MarkSchema=mongoose.Schema({
-    studentId:String,
+   
     projectId:String,
+    week:String,
+    date:String,
     marks:Number,
     comment:String
 
