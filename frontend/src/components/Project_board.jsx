@@ -3,6 +3,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Container, Typography, L
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Vivavoce from './Vivavoce';
 
 const ProjectBoard = () => {
   const pid = 201;
@@ -211,56 +212,15 @@ const ProjectBoard = () => {
   </AccordionDetails>
   </Accordion>
 
-
-{/* Acordion for project submission and Format */}
-        <Accordion sx={{ marginBottom: '10px' }}>
-
-  <AccordionSummary  expandIcon={<ExpandMoreIcon />}
-  aria-controls="project-overview-content"   id="project-overview-header">
-    <Typography variant="h6">Final project submission and Format</Typography>
-  </AccordionSummary>
-  <AccordionDetails>
-    
-       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-               <TextField
-                 label="Project Title"
-                 variant="outlined"
-                 sx={{ marginBottom: '15px' }}
-               />
-               <TextField
-                 label="Project Description"
-                 variant="outlined"
-                 multiline
-                 rows={4}
-                 sx={{ marginBottom: '15px' }}
-               />
-               
-               {/* Links Section */}
-               <TextField
-                 label="GitHub Repository Link"
-                 variant="outlined"
-                 type="url"
-                 sx={{ marginBottom: '15px' }}
-               />
-             
-               
-               
-               {/* Submit button */}
-               <Button variant="contained" color="primary" sx={{ marginTop: '15px' }}>
-                 Submit Project
-               </Button>
-             </Box>
-  </AccordionDetails>
-</Accordion>
 {/* Accordion for Project Report & viva-voce format */}
 <Accordion sx={{ marginBottom: '10px' }}>
 
   <AccordionSummary  expandIcon={<ExpandMoreIcon />}
   aria-controls="project-overview-content"   id="project-overview-header">
-    <Typography variant="h6">  Project Report & Viva-Voce Format</Typography>
+    <Typography variant="h6"> Final Project Report Submission  & Viva-Voce Format</Typography>
   </AccordionSummary>
   <AccordionDetails>
-
+<Vivavoce/>
   </AccordionDetails>
   </Accordion>
 {/* Accordion for discussion Forum*/}
