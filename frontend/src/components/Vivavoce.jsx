@@ -1,41 +1,143 @@
-import React from 'react';
+import React, { useState } from 'react';
+import "./Appp.css";
 
-const Vivavoce= () => {
-  return (
-    <div>
-      <h2>Viva-Voce Guidelines</h2>
-      
-      <p>
-        A Viva-Voce is an oral examination where you present your project to your examiners.
-        Here are the key points to help you prepare:
-      </p>
+const Vivavoce = () => {
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [vivaOpened, setVivaOpened] = useState(false);
+    const [file, setFile] = useState(null);
+    const [link, setLink] = useState("");
+    const [comments, setComments] = useState("");
+    const [vivaFile, setVivaFile] = useState(null);
+    const [vivaLink, setVivaLink] = useState("");
 
-      <h3>Preparation Guidelines:</h3>
-      <ul>
-        <li>Explain the objective of your project: What is it designed to do?</li>
-        <li>Describe the key features and modules of the project: Student view, Mentor view, and Admin view.</li>
-        <li>Talk about the technologies used and why you chose them (React, Node.js, MongoDB, etc.).</li>
-        <li>Discuss the challenges you faced during the development and how you solved them.</li>
-        <li>Be ready for a live demo: Show how the system works step by step.</li>
-        <li>Understand the system architecture: Explain the flow of the application and how each module interacts.</li>
-      </ul>
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
+    };
 
-      <h3>Viva-Voce Questions to Prepare For:</h3>
-      <ul>
-        <li>What is the purpose of your project? Why did you choose it?</li>
-        <li>How does the student registration process work?</li>
-        <li>Explain how the mentor evaluates student submissions and marks them.</li>
-        <li>What technologies did you use in your project? Why did you choose these technologies?</li>
-        <li>Can you explain how the admin manages the project topics and mentors?</li>
-        <li>What were the challenges you faced while building this project, and how did you overcome them?</li>
-        <li>Can you explain the system flow from login to project selection and submission?</li>
-      </ul>
+    const handleLinkChange = (e) => {
+        setLink(e.target.value);
+    };
 
-      <p>
-        Ensure you are comfortable explaining each part of your project and answering questions from the examiners.
-      </p>
-    </div>
-  );
-}
+    const handleCommentsChange = (e) => {
+        setComments(e.target.value);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (file || link) {
+            console.log("Submitting report:", { file, link, comments });
+            setTimeout(() => {
+                setIsSubmitted(true);
+            }, 1000);
+        } else {
+            alert("Please upload a file or provide a link to your report.");
+        }
+    };
+
+    const handleVivaFileChange = (e) => {
+        setVivaFile(e.target.files[0]);
+    };
+
+    const handleVivaLinkChange = (e) => {
+        setVivaLink(e.target.value);
+    };
+
+    const handleVivaSubmit = (e) => {
+        e.preventDefault();
+
+        if (vivaFile || vivaLink) {
+            console.log("Submitting viva voce details:", { vivaFile, vivaLink });
+            alert("Viva Voce submission successful!");
+        } else {
+            alert("Please upload a file or provide a link for Viva Voce.");
+        }
+    };
+
+    return (
+        <div className="container">
+            <h1>Final Project Report Submission</h1>
+
+            {!isSubmitted ? (
+                <form onSubmit={handleSubmit} className="submission-form">
+                    <p>Upload your project report and link below.</p>
+
+                    <label>
+                        <strong>Upload File:</strong>
+                        <input
+                            type="file"
+                            onChange={handleFileChange}
+                            accept=".pdf,.docx,.zip"
+                        />
+                    </label>
+
+                    <div>
+                        <label>
+                            <strong>Submit your Github link:</strong>
+                        </label>
+                        <input
+                            type="url"
+                            value={link}
+                            onChange={handleLinkChange}
+                            placeholder="Paste your link here"
+                        />
+                    </div>
+
+                    <div>
+                        <label>
+                            <strong>Comments (Optional):</strong>
+                        </label>
+                        <textarea
+                            value={comments}
+                            onChange={handleCommentsChange}
+                            placeholder="Add any notes or comments about your submission."
+                        />
+                    </div>
+
+                    <button type="submit">Submit</button>
+                </form>
+            ) : (
+                <div className="confirmation">
+                    <h3>Your project report has been successfully submitted.</h3>
+
+                    <div className="viva-voce-section">
+                        <h3>Viva Voce Details</h3>
+
+                        <p><strong>Topics:</strong> Based on your project report and additional queries on related subjects.</p>
+
+                        {!vivaOpened ? (
+                            <button onClick={() => setVivaOpened(true)} className="viva-link">
+                                Open Viva Voce Submission Form
+                            </button>
+                        ) : (
+                            <form onSubmit={handleVivaSubmit} className="viva-form">
+                                <label>
+                                    <strong>Upload Viva File:</strong>
+                                    <input
+                                        type="file"
+                                        onChange={handleVivaFileChange}
+                                        accept=".pdf,.docx,.zip"
+                                    />
+                                </label>
+                                <div>
+                                    <label>
+                                        <strong>Submit Viva Link:</strong>
+                                    </label>
+                                    <input
+                                        type="url"
+                                        value={vivaLink}
+                                        onChange={handleVivaLinkChange}
+                                        placeholder="Paste your link here"
+                                    />
+                                </div>
+                                <button type="submit">Submit Viva Voce</button>
+                            </form>
+                        )}
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
 
 export default Vivavoce;
