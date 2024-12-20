@@ -31,7 +31,7 @@ const PopularCategories = () => {
           </Col>
         ))}
         <Col xs={12} sm={6} md={4} lg={3}>
-          <Card className="h-100 text-center shadow-sm bg-success text-white">
+          <Card className="h-100 text-center shadow-sm" style={{ backgroundColor: '#00acc1' }} text="white">
             <Card.Body>
               <div style={{ fontSize: "2rem" }}>+10K</div>
               <Card.Title>Available now!</Card.Title>

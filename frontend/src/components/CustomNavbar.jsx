@@ -15,7 +15,20 @@ const CustomNavbar = () => {
     >
       <Container>
    
-        <Navbar.Brand
+      <Navbar.Brand href="#" className="fw-bold" style={{ padding: '0' }}>
+          <img
+            src="\logo\iip-black.png"
+            alt="Logo"
+            style={{
+              height: '40px',
+              width: 'auto',
+            }} 
+    
+          />
+        </Navbar.Brand>
+
+
+        {/* <Navbar.Brand
           href="#"
           className="fw-bold"
           style={{
@@ -24,7 +37,7 @@ const CustomNavbar = () => {
           }}
         >
           InternshipPortal
-        </Navbar.Brand>
+        </Navbar.Brand> */}
 
         {/* Toggle button for mobile */}
         <Navbar.Toggle
@@ -43,7 +56,7 @@ const CustomNavbar = () => {
               margin: '0', 
             }}
           >
-            <Nav.Link
+            {/* <Nav.Link
               href="#home"
               className="px-3"
               style={{
@@ -72,7 +85,7 @@ const CustomNavbar = () => {
               }}
             >
               About
-            </Nav.Link>
+            </Nav.Link> */}
           </Nav>
 
           
@@ -82,8 +95,8 @@ const CustomNavbar = () => {
                 variant="outline-success"
                 className="btn-sm"
                 style={{
-                  fontSize: '0.75rem',
-                  padding: '0.25rem 0.5rem',
+                  fontSize: '0.9rem',
+                  padding: '0.5rem 1rem',
                 }}
               >
                 Login
@@ -94,8 +107,9 @@ const CustomNavbar = () => {
                 variant="success"
                 className="btn-sm"
                 style={{
-                  fontSize: '0.75rem',
-                  padding: '0.25rem 0.5rem',
+                  fontSize: '0.9rem',
+                  padding: '0.5rem 1rem', 
+                  // .025,0.5
                 }}
               >
                 Signup

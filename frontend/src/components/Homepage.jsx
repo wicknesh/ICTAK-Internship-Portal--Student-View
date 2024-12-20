@@ -22,7 +22,7 @@ const HomePage = () => {
           {/* Main Heading */}
           <div className="content">
             <h2>Over 5,000 internships are waiting for you</h2>
-            <p>Connect with top companies to find the perfect internship</p>
+            <p></p>
           </div>
          {/* Signup Section */}
          <div className="signup-section">

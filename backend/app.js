@@ -5,7 +5,7 @@ import 'dotenv/config';
 import connectDB from './config/db.js'
 import studentRoutes from './routes/studentRoutes.js';
 import projectRoutes from './routes/projectRoutes.js';
-
+import discussionRoutes from './routes/discussionRoutes.js'
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -16,6 +16,7 @@ app.use(cors());
 // }))
 app.use('/student', studentRoutes); //common for Amina
 app.use('/project', projectRoutes);
+app.use('/discussion', discussionRoutes);
 
 app.get('/', (req, res) => {
     res.send('Working');
