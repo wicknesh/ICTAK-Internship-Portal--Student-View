@@ -1,143 +1,169 @@
-import React, { useState } from 'react';
-import "./Appp.css";
+import React, { useState } from "react";
+import { Container, Typography, TextField, Button, Box, Grid } from "@mui/material";
 
 const Vivavoce = () => {
-    const [isSubmitted, setIsSubmitted] = useState(false);
-    const [vivaOpened, setVivaOpened] = useState(false);
-    const [file, setFile] = useState(null);
-    const [link, setLink] = useState("");
-    const [comments, setComments] = useState("");
-    const [vivaFile, setVivaFile] = useState(null);
-    const [vivaLink, setVivaLink] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [vivaOpened, setVivaOpened] = useState(false);
+  const [file, setFile] = useState(null);
+  const [link, setLink] = useState("");
+  const [comments, setComments] = useState("");
+  const [vivaFile, setVivaFile] = useState(null);
+  const [vivaLink, setVivaLink] = useState("");
+  const vivaQuestions = [
+    "What inspired your project idea?",
+    "Explain the technologies used in your project.",
+    "What challenges did you face during development?",
+    "How does your project address real-world problems?",
+    "What improvements would you make in the future?"
+  ];
 
-    const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
-    };
+  const handleFileChange = (e) => setFile(e.target.files[0]);
+  const handleLinkChange = (e) => setLink(e.target.value);
+  const handleCommentsChange = (e) => setComments(e.target.value);
+  const handleVivaFileChange = (e) => setVivaFile(e.target.files[0]);
+  const handleVivaLinkChange = (e) => setVivaLink(e.target.value);
 
-    const handleLinkChange = (e) => {
-        setLink(e.target.value);
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (file || link) {
+      console.log("Submitting report:", { file, link, comments });
+      setTimeout(() => setIsSubmitted(true), 1000);
+    } else {
+      alert("Please upload a file or provide a link to your report.");
+    }
+  };
 
-    const handleCommentsChange = (e) => {
-        setComments(e.target.value);
-    };
+  const handleVivaSubmit = (e) => {
+    e.preventDefault();
+    if (vivaFile || vivaLink) {
+      console.log("Submitting viva voce details:", { vivaFile, vivaLink });
+      alert("Viva Voce submission successful!");
+    } else {
+      alert("Please upload a file or provide a link for Viva Voce.");
+    }
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+  return (
+    <Container maxWidth="md" sx={{ mt: 4 }}>
+      <Typography variant="h4" align="center" gutterBottom>
+        Final Project Report Submission
+      </Typography>
 
-        if (file || link) {
-            console.log("Submitting report:", { file, link, comments });
-            setTimeout(() => {
-                setIsSubmitted(true);
-            }, 1000);
-        } else {
-            alert("Please upload a file or provide a link to your report.");
-        }
-    };
+      {!isSubmitted ? (
+        <form onSubmit={handleSubmit}>
+          <Typography variant="body1" gutterBottom>
+            Upload your project report and link below.
+          </Typography>
 
-    const handleVivaFileChange = (e) => {
-        setVivaFile(e.target.files[0]);
-    };
+          <Box mb={3}>
+            <Typography variant="subtitle1">Upload File:</Typography>
+            <TextField
+              type="file"
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+              onChange={handleFileChange}
+            />
+          </Box>
 
-    const handleVivaLinkChange = (e) => {
-        setVivaLink(e.target.value);
-    };
+          <Box mb={3}>
+            <Typography variant="subtitle1">Submit your GitHub link:</Typography>
+            <TextField
+              type="url"
+              value={link}
+              onChange={handleLinkChange}
+              fullWidth
+              placeholder="Paste your link here"
+            />
+          </Box>
 
-    const handleVivaSubmit = (e) => {
-        e.preventDefault();
+          <Box mb={3}>
+            <Typography variant="subtitle1">Comments (Optional):</Typography>
+            <TextField
+              value={comments}
+              onChange={handleCommentsChange}
+              fullWidth
+              multiline
+              rows={4}
+              placeholder="Add any notes or comments about your submission."
+            />
+          </Box>
 
-        if (vivaFile || vivaLink) {
-            console.log("Submitting viva voce details:", { vivaFile, vivaLink });
-            alert("Viva Voce submission successful!");
-        } else {
-            alert("Please upload a file or provide a link for Viva Voce.");
-        }
-    };
+          <Button variant="contained" color="primary" type="submit" fullWidth>
+            Submit
+          </Button>
+        </form>
+      ) : (
+        <Box>
+          <Typography variant="h6" gutterBottom>
+            Your project report has been successfully submitted.
+          </Typography>
 
-    return (
-        <div className="container">
-            <h1>Final Project Report Submission</h1>
+          <Box mt={4}>
+            <Typography variant="h5" gutterBottom>
+              Viva Voce Details
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              Answer the following viva voce questions. Provide supporting files or a GitHub link if required.
+            </Typography>
 
-            {!isSubmitted ? (
-                <form onSubmit={handleSubmit} className="submission-form">
-                    <p>Upload your project report and link below.</p>
-
-                    <label>
-                        <strong>Upload File:</strong>
-                        <input
-                            type="file"
-                            onChange={handleFileChange}
-                            accept=".pdf,.docx,.zip"
-                        />
-                    </label>
-
-                    <div>
-                        <label>
-                            <strong>Submit your Github link:</strong>
-                        </label>
-                        <input
-                            type="url"
-                            value={link}
-                            onChange={handleLinkChange}
-                            placeholder="Paste your link here"
-                        />
-                    </div>
-
-                    <div>
-                        <label>
-                            <strong>Comments (Optional):</strong>
-                        </label>
-                        <textarea
-                            value={comments}
-                            onChange={handleCommentsChange}
-                            placeholder="Add any notes or comments about your submission."
-                        />
-                    </div>
-
-                    <button type="submit">Submit</button>
-                </form>
+            {!vivaOpened ? (
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => setVivaOpened(true)}
+              >
+                Open Viva Voce Submission Form
+              </Button>
             ) : (
-                <div className="confirmation">
-                    <h3>Your project report has been successfully submitted.</h3>
+              <form onSubmit={handleVivaSubmit}>
+                <Box mt={3}>
+                  {vivaQuestions.map((question, index) => (
+                    <Box mb={3} key={index}>
+                      <Typography variant="subtitle1">
+                        {index + 1}. {question}
+                      </Typography>
+                      <TextField
+                        fullWidth
+                        multiline
+                        rows={4}
+                        placeholder={`Your answer for question ${index + 1}`}
+                        required
+                      />
+                    </Box>
+                  ))}
+                </Box>
 
-                    <div className="viva-voce-section">
-                        <h3>Viva Voce Details</h3>
+                <Box mb={3}>
+                  <Typography variant="subtitle1">Upload Viva File (if any):</Typography>
+                  <TextField
+                    type="file"
+                    fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    onChange={handleVivaFileChange}
+                  />
+                </Box>
 
-                        <p><strong>Topics:</strong> Based on your project report and additional queries on related subjects.</p>
+                <Box mb={3}>
+                  <Typography variant="subtitle1">Submit Viva GitHub Link (if any):</Typography>
+                  <TextField
+                    type="url"
+                    value={vivaLink}
+                    onChange={handleVivaLinkChange}
+                    fullWidth
+                    placeholder="Paste your GitHub repository link here"
+                  />
+                </Box>
 
-                        {!vivaOpened ? (
-                            <button onClick={() => setVivaOpened(true)} className="viva-link">
-                                Open Viva Voce Submission Form
-                            </button>
-                        ) : (
-                            <form onSubmit={handleVivaSubmit} className="viva-form">
-                                <label>
-                                    <strong>Upload Viva File:</strong>
-                                    <input
-                                        type="file"
-                                        onChange={handleVivaFileChange}
-                                        accept=".pdf,.docx,.zip"
-                                    />
-                                </label>
-                                <div>
-                                    <label>
-                                        <strong>Submit Viva Link:</strong>
-                                    </label>
-                                    <input
-                                        type="url"
-                                        value={vivaLink}
-                                        onChange={handleVivaLinkChange}
-                                        placeholder="Paste your link here"
-                                    />
-                                </div>
-                                <button type="submit">Submit Viva Voce</button>
-                            </form>
-                        )}
-                    </div>
-                </div>
+                <Button variant="contained" color="primary" type="submit" fullWidth>
+                  Submit Viva Voce
+                </Button>
+              </form>
             )}
-        </div>
-    );
+          </Box>
+        </Box>
+      )}
+    </Container>
+  );
 };
 
 export default Vivavoce;
