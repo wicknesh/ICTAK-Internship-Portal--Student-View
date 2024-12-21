@@ -1,4 +1,3 @@
-import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import './PopularCategories.css';
@@ -30,8 +29,8 @@ const PopularCategories = () => {
             </Card>
           </Col>
         ))}
-        <Col xs={12} sm={6} md={4} lg={3}>
-          <Card className="h-100 text-center shadow-sm bg-success text-white">
+        {/* <Col xs={12} sm={6} md={4} lg={3}>
+          <Card className="h-100 text-center shadow-sm" style={{ backgroundColor: '#00acc1' }} text="white">
             <Card.Body>
               <div style={{ fontSize: "2rem" }}>+10K</div>
               <Card.Title>Available now!</Card.Title>
@@ -40,7 +39,7 @@ const PopularCategories = () => {
               </Button>
             </Card.Body>
           </Card>
-        </Col>
+        </Col> */}
       </Row>
     </Container>
   );

@@ -1,10 +1,9 @@
-import {  useContext, useEffect, useState } from 'react'
+import {  useContext, useState } from 'react'
 import AppBar from '@mui/material/AppBar';
 import { Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { StudentContext } from './StudentProvider';
 import { useNavigate } from 'react-router-dom';
-// import axios from 'axios';
 
 const pages = ['Home', 'Projects'];
 
@@ -31,7 +30,8 @@ const NavBar = () => {
 
     const handleLogout = () => {
       setStudent(null);
-      localStorage.removeItem("student");
+      sessionStorage.removeItem("user");
+      sessionStorage.removeItem("token");
       navigate('/');
     }
 
@@ -50,7 +50,7 @@ const NavBar = () => {
     // }, []);
 
   return (
-    <AppBar position="static" style={{backgroundColor: '#1e1e1e'}}>
+    <AppBar position="static" style={{backgroundImage: 'linear-gradient(to right, #004d40, #00acc1)'}}>
     <Container maxWidth="xl">
       <Toolbar disableGutters>
         <Box

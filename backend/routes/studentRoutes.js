@@ -4,7 +4,8 @@ const router = express.Router();
 import jwt from 'jsonwebtoken';
 import studentModel from '../models/studentData.js'
 // import studentModelAmina from '../model/studentData.js'
-import examModel from '../models/studentMark.js'; // Exam score model
+import examModel from '../models/scoreData.js'; // Exam score model
+import markModel from '../models/markData.js';
 
 // Route to add exam scores
 router.post('/score', async (req, res) => {
@@ -114,7 +115,7 @@ router.post('/login', async (req, res) => {
     res.status(200).json({
       message: "Login successful",
       user: userWithoutSensitiveInfo,
-      token, // Send the token if using one
+      token
     });
   } catch (error) {
     console.error("Error during login:", error);
@@ -150,13 +151,25 @@ router.put('/selectProject', async (req, res) => {
     try {
         const data = await studentModel.findOneAndUpdate(
             { s_id },
-            { selectedProject: p_id },
+            { selectedProject: p_id,
+              projectSelectedAt: new Date()
+            },
             { new: true }
         );
         res.status(200).json({ message: 'Project selected successfully', data});
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
+})
+
+router.get('/marks', async(req, res) => {
+  const { s_id, p_id } = req.query;
+  try {
+    const data = await markModel.findOne({ s_id, p_id });
+    res.status(200).send(data);
+  } catch (error) {
+    res.status(404).send(error);
+  }
 })
 
 export default router;

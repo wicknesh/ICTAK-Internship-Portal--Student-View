@@ -4,15 +4,15 @@ export const StudentContext = createContext();
 
 export const StudentProvider = ({ children }) => {
     const [ student, setStudent ] = useState (() => {
-        const storedStudent = localStorage.getItem("student");
+        const storedStudent = sessionStorage.getItem("user");
         return storedStudent ? JSON.parse(storedStudent) : null;
     });
 
     useEffect(() => {
         if(student) {
-            localStorage.setItem("student", JSON.stringify(student));
+            sessionStorage.setItem("user", JSON.stringify(student));
         } else {
-            localStorage.removeItem("student");
+            sessionStorage.removeItem("user");
         }
     }, [student]);
 

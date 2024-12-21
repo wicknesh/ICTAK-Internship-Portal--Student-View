@@ -3,7 +3,7 @@ const router = express.Router();
 import projectModel from '../models/projectData.js';
 
 router.post('/add', async (req, res) => {
-    const { p_id, p_name, p_desc, p_type, p_dur }= req.body;
+    const { p_id, p_name, p_desc, p_type, p_dur } = req.body;
     try {
         const newProject = new projectModel({ p_id, p_name, p_desc, p_type, p_dur });
         await newProject.save();

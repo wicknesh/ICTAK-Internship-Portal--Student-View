@@ -2,7 +2,6 @@ import { Box, Button, Card, CardActions, CardContent, Fab, Modal, Paper, Typogra
 import React, { useContext, useEffect, useState } from "react"
 import axios from 'axios';
 import { red } from "@mui/material/colors";
-import NavBar from "./NavBar";
 import { StudentContext } from "./StudentProvider";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +11,7 @@ const StudentDashboard = () => {
     const [ overlay, setOverlay ] = useState(null);
     const [ confirmModal, setConfirmModal ] = useState(false);
     // const [ student, setStudent ] = useState (null);
-    const { student } = useContext (StudentContext);
+    const { student, setStudent } = useContext (StudentContext);
     const navigate = useNavigate();
 
       const handleCardClick = (index) => {
@@ -47,10 +46,23 @@ const StudentDashboard = () => {
         try {
             const selectedProjectId = projects[selectedCard].p_id;
             const studentId = student?.s_id;
-            await axios.put(`http://localhost:3000/student/selectProject`, {
+            const response1 = await axios.put(`http://localhost:3000/student/selectProject`, {
                 s_id: studentId,
                 p_id: selectedProjectId
             });
+
+            await axios.post(`http://localhost:3000/submission/initial`, {
+                s_id: studentId,
+                p_id: selectedProjectId
+            })
+
+            const updatedData = response1.data.data;
+            setStudent((prevStudent) => ({
+                ...prevStudent,
+                selectedProject: updatedData?.selectedProject,
+                projectSelectedAt: updatedData?.projectSelectedAt
+            }))
+
             setConfirmModal(false);
             navigate('/project-dashboard')
             } catch (error) {
@@ -65,7 +77,7 @@ const StudentDashboard = () => {
   return (
     <>
         <Box sx={{
-            backgroundColor: '#121212',
+            backgroundColor: '#f4f4f4',
             minHeight: '100vh',
             display: 'flex',
             justifyContent: 'center',
@@ -77,12 +89,12 @@ const StudentDashboard = () => {
                 sx={{
                     paddingX: 10,
                     paddingY: 5,
-                    backgroundColor: '#1e1e1e',
+                    backgroundColor: '#ffffff',
                     position: 'relative'
                 }}
             >
                 <Box>
-                    <Typography sx={{fontSize: 30, mb: 2, color: '#ececec', fontWeight: '500' }}>Projects</Typography>
+                    <Typography sx={{fontSize: 30, mb: 2, color: '#333333', fontWeight: '500' }}>Projects</Typography>
                 </Box>
                 <Box sx={{maxWidth: '50rem'}}>
                     {projects && projects.map((project, index) => (
@@ -90,10 +102,10 @@ const StudentDashboard = () => {
                             key={index}
                             variant='outlined'
                             sx={{
-                                backgroundColor: selectedCard === index ? '#2e2e2e' : '#1c1c1c',
+                                backgroundColor: selectedCard === index ? '#f0f9ff' : '#ffffff',
                                 borderWidth: 1,
                                 borderRadius: '1rem',
-                                borderColor: selectedCard === index ? 'green' : '#ececec',
+                                borderColor: selectedCard === index ? 'green' : '#cccccc',
                                 pointerEvents: selectedCard !== null && selectedCard !== index ? 'none' : 'auto',
                                 marginBottom: 2,
                                 transition: 'all 0.3s',
@@ -104,16 +116,16 @@ const StudentDashboard = () => {
                         >
                             <React.Fragment>
                                 <CardContent>
-                                    <Typography gutterBottom sx={{ color: 'grey', fontSize: 14, userSelect: 'none' }}>
+                                    <Typography gutterBottom sx={{ color: '#555555', fontSize: 14, userSelect: 'none' }}>
                                         {project.p_type}
                                     </Typography>
-                                    <Typography variant="h5" component="div" sx={{ color: '#ececec', userSelect: 'none' }}>
+                                    <Typography variant="h5" component="div" sx={{ color: '#333333', userSelect: 'none' }}>
                                         {project.p_name}
                                     </Typography>
-                                    <Typography sx={{ color: 'grey', mb: 1.5, userSelect: 'none' }}>
+                                    <Typography sx={{ color: '#555555', mb: 1.5, userSelect: 'none' }}>
                                     {project.p_dur}
                                     </Typography>
-                                    <Typography variant="body2" sx={{ color: '#ececec', userSelect: 'none' }}>
+                                    <Typography variant="body2" sx={{ color: '#333333', userSelect: 'none' }}>
                                         {project.p_desc}
                                     </Typography>
                                 </CardContent>
@@ -124,7 +136,7 @@ const StudentDashboard = () => {
                                             e.stopPropagation();
                                             handleLearnMoreClick(project)
                                         }}
-                                        sx={{ userSelect: 'none', color: '#0099cc'}}
+                                        sx={{ userSelect: 'none', color: '#0078d7'}}
                                     >Learn More</Button>
                                 </CardActions>
                             </React.Fragment>
@@ -139,7 +151,7 @@ const StudentDashboard = () => {
                         position: 'absolute',
                         top: 16,
                         right: 16,
-                        color: '#ececec',
+                        color: '#ffffff',
                         backgroundColor: red[500],
                         '&:hover': { backgroundColor: 'red' }
                     }}
@@ -157,8 +169,8 @@ const StudentDashboard = () => {
                 >
                     <Box
                         sx={{
-                            backgroundColor: '#1e1e1e',
-                            color: '#ececec',
+                            backgroundColor: '#ffffff',
+                            color: '#333333',
                             padding: 4,
                             borderRadius: '8px',
                             maxWidth: '400px',
@@ -204,7 +216,7 @@ const StudentDashboard = () => {
                             <Button
                                 onClick={handleConfirmSubmit}
                                 sx={{
-                                    color: '#66c66'
+                                    color: '#5cb85c'
                                 }}
                             >
                                 Confirm
@@ -225,8 +237,8 @@ const StudentDashboard = () => {
             >
                 <Box
                     sx={{
-                        backgroundColor: '#1e1e1e',
-                        color: '#ececec',
+                        backgroundColor: '#ffffff',
+                        color: '#333333',
                         padding: 4,
                         borderRadius: '8px',
                         maxWidth: '600px',
@@ -263,7 +275,7 @@ const StudentDashboard = () => {
                                 }}>
                                     <Button
                                         onClick={handleCloseOverlay}
-                                        sx={{ color: '#0099cc' }}
+                                        sx={{ color: '#0078d7' }}
                                     >
                                         Close
                                     </Button>

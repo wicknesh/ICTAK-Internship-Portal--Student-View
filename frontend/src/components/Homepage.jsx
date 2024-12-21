@@ -23,15 +23,16 @@ const HomePage = () => {
           {/* Main Heading */}
           <div className="content">
             <h2>Over 5,000 internships are waiting for you</h2>
-            <p>Connect with top companies to find the perfect internship</p>
+            <p></p>
           </div>
          {/* Signup Section */}
          <div className="signup-section">
               <p className="signup-text">
                 Ready to kickstart your career? <br /> Sign up now to get access to the latest opportunities!
               </p>
-              <Link to={'/signup'}><button className="btn btn-success signup-btn">Sign Up</button></Link>
-      
+              <Link to={'/signup'}>
+                <button className="btn btn-success signup-btn">Sign Up</button>
+              </Link>  
           </div>
           <div  className="popular-categories-container">
           <PopularCategories/>
