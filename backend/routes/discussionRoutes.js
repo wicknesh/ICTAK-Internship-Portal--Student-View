@@ -4,9 +4,7 @@ import studentModel from '../models/studentData.js';
 
 const router = express.Router();
 
-// @route   GET /discussion/:p_id
-// @desc    Get all queries for a specific project
-// @access  Public
+
 router.get('/:p_id', async (req, res) => {
   try {
     const discussions = await Discussion.find({ p_id: req.params.p_id });
@@ -17,8 +15,7 @@ router.get('/:p_id', async (req, res) => {
 });
 
 // @route   POST /discussion
-// @desc    Post a new query to the discussion forum
-// @access  Public
+
 router.post('/', async (req, res) => {
   const { p_id, email, query } = req.body;
 
@@ -39,9 +36,8 @@ router.post('/', async (req, res) => {
   }
 });
 
-// @route   PUT /discussion/:id
-// @desc    Edit an existing query
-// @access  Public
+//   PUT /discussion/:id
+
 router.put('/:id', async (req, res) => {
   const { email, query } = req.body;
 
@@ -64,9 +60,8 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// @route   POST /discussion/:id/comments
-// @desc    Add a comment to a query
-// @access  Public
+//  POST /discussion/:id/comments
+
 router.post('/:id/comments', async (req, res) => {
   const { commenterEmail, comment } = req.body;
 
@@ -77,7 +72,7 @@ router.post('/:id/comments', async (req, res) => {
     const discussion = await Discussion.findById(req.params.id);
     if (!discussion) return res.status(404).json({ error: 'Query not found' });
 
-    // Push a new comment with the commenter's name
+ 
     discussion.comments.push({ commenterName: student.name, comment ,  timestamp: new Date(),});
     const updatedDiscussion = await discussion.save();
 
@@ -86,5 +81,37 @@ router.post('/:id/comments', async (req, res) => {
     res.status(500).json({ error: 'Failed to add comment', details: err.message });
   }
 });
+
+router.put('/:id/like', async (req, res) => {
+  try {
+    const query = await Discussion.findByIdAndUpdate(
+      req.params.id,
+      { $inc: { likes: 1 } },
+      { new: true }
+    );
+    res.json(query);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to like query' });
+  }
+});
+
+router.put('/:queryId/comments/:commentIndex/like', async (req, res) => {
+  const { queryId, commentIndex } = req.params;
+  try {
+    const query = await Discussion.findById(queryId);
+    if (!query) return res.status(404).json({ message: 'Query not found' });
+
+    if (!query.comments[commentIndex]) {
+      return res.status(404).json({ message: 'Comment not found' });
+    }
+
+    query.comments[commentIndex].likes = (query.comments[commentIndex].likes || 0) + 1;
+    await query.save();
+    res.json({ comments: query.comments });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to like comment' });
+  }
+});
+
 
 export default router;
