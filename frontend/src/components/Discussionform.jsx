@@ -8,14 +8,11 @@ import {
   IconButton,
   Paper,
   Divider,
-  Stack,
-  Avatar,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import CommentIcon from '@mui/icons-material/Comment';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import SendIcon from '@mui/icons-material/Send';
 import axios from 'axios';
 
 const DiscussionForum = () => {
@@ -124,13 +121,23 @@ const DiscussionForum = () => {
   return (
     <Container maxWidth="md" sx={{ marginTop: '40px', marginBottom: '40px' }}>
       <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: '#1976d2' }}>
-        💬 Discussion Forum
+        Discussion Forum
       </Typography>
 
       {/* Query Posting Section */}
-      <Paper elevation={3} sx={{ padding: 3, marginBottom: 4, backgroundColor: '#fdfdfd' }}>
-        <Typography variant="h6" gutterBottom>
-          ✍️ Post a Query
+      <Box
+        component={Paper}
+        elevation={3}
+        sx={{
+          padding: '20px',
+          marginBottom: '30px',
+          backgroundColor: '#f9f9f9',
+          borderRadius: '10px',
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+        }}
+      >
+        <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
+          Post a Query
         </Typography>
         <TextField
           fullWidth
@@ -140,90 +147,148 @@ const DiscussionForum = () => {
           placeholder="Type your query here..."
           value={newQuery}
           onChange={(e) => setNewQuery(e.target.value)}
-          sx={{ marginBottom: 2 }}
+          sx={{ marginBottom: '20px', borderRadius: '8px' }}
         />
         <Button
           variant="contained"
           color="primary"
           onClick={postQuery}
-          startIcon={<SendIcon />}
           fullWidth
+          sx={{ padding: '10px', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)' }}
         >
           Post Query
         </Button>
-      </Paper>
+      </Box>
 
       {/* Query List Section */}
-      <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
-        📝 Queries
+      <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', color: '#333' }}>
+        Queries
       </Typography>
       {queries.map((query) => (
-        <Paper key={query._id} elevation={2} sx={{ padding: 2, marginBottom: 2 }}>
-          <Stack direction="row" spacing={2} alignItems="center">
-            <Avatar>{query.name[0]}</Avatar>
-            <Box flexGrow={1}>
-              <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-                {query.name}
-              </Typography>
-              {editingQuery === query._id ? (
-                <TextField
-                  value={query.query}
-                  onChange={(e) =>
-                    setQueries((prev) =>
-                      prev.map((q) =>
-                        q._id === query._id ? { ...q, query: e.target.value } : q
-                      )
+        <Box
+          component={Paper}
+          elevation={3}
+          key={query._id}
+          sx={{
+            padding: '20px',
+            marginBottom: '20px',
+            borderRadius: '10px',
+            backgroundColor: '#ffffff',
+            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+          }}
+        >
+          <Typography variant="body1">
+            <strong>{query.name}:</strong> {editingQuery === query._id ? (
+              <TextField
+                value={query.query}
+                onChange={(e) =>
+                  setQueries((prev) =>
+                    prev.map((q) =>
+                      q._id === query._id ? { ...q, query: e.target.value } : q
                     )
-                  }
-                  multiline
-                  fullWidth
-                />
-              ) : (
-                <Typography variant="body1">{query.query}</Typography>
-              )}
-              <Typography variant="caption" sx={{ color: '#888' }}>
-                🕒 {new Date(query.timestamp).toLocaleString()}
-              </Typography>
-            </Box>
-            {studentName === query.name && (
-              <IconButton
-                onClick={() =>
-                  editingQuery === query._id
-                    ? editQuery(query._id, query.query)
-                    : setEditingQuery(query._id)
+                  )
                 }
-              >
-                {editingQuery === query._id ? <SaveIcon /> : <EditIcon />}
-              </IconButton>
+                multiline
+                fullWidth
+                sx={{ marginBottom: '10px', borderRadius: '8px' }}
+              />
+            ) : (
+              query.query
             )}
-          </Stack>
+          </Typography>
 
-          <Button
-            startIcon={<ThumbUpIcon />}
-            onClick={() => likeQuery(query._id)}
-            sx={{ marginTop: 1 }}
-          >
-            Like ({query.likes || 0})
-          </Button>
+          <Typography variant="caption" sx={{ color: '#555', display: 'block', marginTop: '5px' }}>
+            Posted on: {new Date(query.timestamp).toLocaleString()}
+          </Typography>
+
+          {studentName === query.name && (
+            <IconButton
+              onClick={() =>
+                editingQuery === query._id
+                  ? editQuery(query._id, query.query)
+                  : setEditingQuery(query._id)
+              }
+              sx={{ float: 'right' }}
+            >
+              {editingQuery === query._id ? <SaveIcon /> : <EditIcon />}
+            </IconButton>
+          )}
+
+          <IconButton onClick={() => likeQuery(query._id)} sx={{ marginLeft: '10px' }}>
+            <ThumbUpIcon /> {query.likes || 0}
+          </IconButton>
+
+          <Divider sx={{ marginY: '10px' }} />
 
           {/* Comments Section */}
-          <Divider sx={{ marginY: 1 }} />
-          <Typography variant="subtitle2">💬 Comments:</Typography>
+          <Typography variant="subtitle2" sx={{ fontWeight: 'bold', color: '#1976d2' }}>
+            Comments:
+          </Typography>
           {query.comments?.map((comment, index) => (
-            <Box key={index} sx={{ paddingLeft: 2, marginY: 1 }}>
+            <Box
+              key={index}
+              sx={{
+                paddingLeft: '10px',
+                marginY: '5px',
+                borderLeft: '3px solid #1976d2',
+                paddingBottom: '5px',
+              }}
+            >
               <Typography variant="body2">
-                <strong>{comment.commenterName}:</strong> {comment.comment}
+                <strong>{comment.commenterName}:</strong> {comment.comment} <br />
+                <em>{new Date(comment.timestamp).toLocaleString()}</em>
               </Typography>
+
               <Button
                 startIcon={<ThumbUpIcon />}
                 onClick={() => likeComment(query._id, index)}
                 size="small"
+                sx={{ marginTop: '5px' }}
               >
                 Like ({comment.likes || 0})
               </Button>
             </Box>
           ))}
-        </Paper>
+
+          {commentingQueryId === query._id ? (
+            <>
+              <TextField
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                fullWidth
+                placeholder="Add a comment..."
+                sx={{ marginTop: '10px', borderRadius: '8px' }}
+              />
+              <Button
+                variant="contained"
+                onClick={() => addComment(query._id)}
+                sx={{
+                  marginTop: '10px',
+                  borderRadius: '8px',
+                  padding: '10px',
+                  boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
+                }}
+                fullWidth
+              >
+                Post Comment
+              </Button>
+            </>
+          ) : (
+            <Button
+              startIcon={<CommentIcon />}
+              onClick={() => setCommentingQueryId(query._id)}
+              sx={{
+                marginTop: '10px',
+                borderRadius: '8px',
+                padding: '10px',
+                backgroundColor: '#1976d2',
+                color: '#fff',
+              }}
+            >
+              Add Comment
+            </Button>
+          )}
+        </Box>
       ))}
     </Container>
   );
