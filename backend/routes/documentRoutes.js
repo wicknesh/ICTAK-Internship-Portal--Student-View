@@ -15,10 +15,6 @@ router.post('/upload', upload.single('documentFile'), async (req, res) => {
 
         const { project_id, type } = req.body;
 
-        if(!project_id) {
-            return res.status(400).send('Project ID is required');
-        }
-
         const document = new documentModel({
             name: req.file.originalname,
             document: req.file.buffer,
@@ -42,6 +38,23 @@ router.get('/:type/download/:id', async (req, res) => {
 
         res.set({
             'Content-Type' : 'application/pdf',
+            'Content-Disposition': `attachment; filename=${document.name}`,
+        });
+
+        res.send(document.document);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error downloading file');
+    }
+})
+
+router.get('/:type/download', async (req, res) => {
+    try {
+        const document = await documentModel.findOne({ type: req.params.type});
+        if(!document) return res.status(404).send('File not found');
+
+        res.set({
+            'Content-Type' : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             'Content-Disposition': `attachment; filename=${document.name}`,
         });
 

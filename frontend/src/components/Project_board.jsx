@@ -143,6 +143,55 @@ const ProjectBoard = () => {
     }  
   };
 
+  const handleWeeklySubmissionFormatDownload = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/document/weeklySubmissionFormat/download`, { responseType: 'arraybuffer'});
+
+      const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.setAttribute('download', `weekly-submission-format.docx`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.log(`Error downloading the file:`, error);
+    }  
+
+  }
+
+  const handleFinalSubmissionFormatDownload = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/document/finalSubmissionFormat/download`, { responseType: 'arraybuffer'});
+
+      const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.setAttribute('download', `final-submission-format.docx`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.log(`Error downloading the file:`, error);
+    }
+  }
+
+  const handleVivaVoceDownload = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/document/viva-voce/download`, { responseType: 'arraybuffer'});
+
+      const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.setAttribute('download', `viva-voce.docx`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.log(`Error downloading the file:`, error);
+    }
+  }
+
   useEffect (() => {
     const fetchInitialProjectData = async () => {
       try {
@@ -386,6 +435,10 @@ const ProjectBoard = () => {
             <Typography variant="h6">Weekly submission</Typography>
           </AccordionSummary>
           <AccordionDetails>
+          <Typography variant="body1">
+              <strong>Weekly submission format:</strong>{' '}
+                    <Button variant='outlined' onClick={() => handleWeeklySubmissionFormatDownload()}>Download</Button>
+            </Typography>
           {isWeeklyFormOpen ? (
             <Box sx={{ maxWidth: 400, margin: 'auto', padding: 2 }}>
               <form onSubmit={handleWeeklySubmit}>
@@ -450,6 +503,10 @@ const ProjectBoard = () => {
             <Typography variant="h6">Final submission</Typography>
           </AccordionSummary>
           <AccordionDetails>
+          <Typography variant="body1">
+              <strong>Final submission format:</strong>{' '}
+                  <Button variant='outlined' onClick={() => handleFinalSubmissionFormatDownload()}>Download</Button>
+            </Typography>
           {isFinalFormOpen ? (
             <Box sx={{ maxWidth: 400, margin: 'auto', padding: 2 }}>
               <form onSubmit={handleFinalSubmit}>
@@ -676,6 +733,10 @@ const ProjectBoard = () => {
             <Typography variant="h6">Viva-voce submission</Typography>
           </AccordionSummary>
           <AccordionDetails>
+          <Typography variant="body1">
+              <strong>Final submission format:</strong>{' '}
+                  <Button variant='outlined' onClick={() => handleVivaVoceDownload()}>Download</Button>
+            </Typography>
           {isVivaVoceOpen ? (
             <Box sx={{ maxWidth: 400, margin: 'auto', padding: 2 }}>
               <form onSubmit={handleVivaVoceSubmit}>
